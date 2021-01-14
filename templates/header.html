@@ -1,0 +1,21 @@
+{% extends 'bootstrap/base.html' %}
+
+<!-- Content Block -->
+{% block page_title %} Ambiente Virtual de Aprendizagem {% endblock %}
+
+<!-- My CSS -->
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="/static/css/main.css">
+{% endblock %}
+
+<!-- Content -->
+{% block navbar %}
+<div class="container c_header">
+    <div class="jumbotron" style="background-image: url('/static/images/jumbotron_bg.png')">
+        <h1 style="font-weight: bolder">A V A D A</h1>
+        <h2>Um ambiente virtual de aprendizagem</h2>
+        <p>Feito para pessoas que querem aprendizagem de forma virtual em um ambiente.</p>
+    </div>
+</div>
+{% endblock %}
