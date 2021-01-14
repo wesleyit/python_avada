@@ -18,6 +18,7 @@ make build
 make rundb
 
 # Run the application container
+sleep 2
 export DB_IP="$(docker inspect --format '{{.NetworkSettings.IPAddress}}' mysql)"
 make runapp DBSTRING="mysql+pymysql://avada:kedavra123@${DB_IP}/avada_db"
 
