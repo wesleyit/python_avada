@@ -88,13 +88,14 @@ rundb:
 		-e MYSQL_USER=avada \
 		-e MYSQL_PASSWORD=kedavra123 \
 		-e MYSQL_DATABASE=avada_db \
-		-v $(pwd)/db:/var/lib/mysql \
+		-v $(pwd)/db:/var/lib/mysql:rw \
 		-p 3306:3306 \
 		-d mysql
 	@ docker ps -a | grep mysql
 
 initdb:
-	@ sleep 5
+	@ echo "Waiting for MySQL to be ready..."
+	@ sleep 10
 	@ docker exec -i mysql \
 		mysql -uavada -pkedavra123 avada_db \
 		< db_seed/avada_db_dump.sql
