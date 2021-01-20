@@ -28,7 +28,7 @@ function venv() {
 function build() {
     HELP=" build: Generates the latest tag of the application Docker image."
     cd "application/"
-    docker build --rm -t python_ava:latest .
+    docker build --rm -t wesleyit/python_ava:latest .
     cd ..
 }
 
@@ -49,7 +49,7 @@ function run_app_container() {
         --name python_ava \
         -p "8080:8080" \
         -e DBSTRING="${DBSTRING}" \
-        -d python_ava:latest
+        -d wesleyit/python_ava:latest
 }
 
 function run_db_container() {

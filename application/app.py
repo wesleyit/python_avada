@@ -1,4 +1,5 @@
 # coding=utf-8
+import os
 import sys
 import flask as f
 import sqlalchemy as db
@@ -65,6 +66,34 @@ def get_index():
         student=aluno,
         intro_text=texto_intro,
     )
+
+
+@app.route('/recados', methods=['GET'])
+def get_recados():
+    cookie_user = f.request.cookies.get('python_ava_user')
+    if cookie_user:
+        files = os.listdir('notes/')
+        return f.render_template(
+            'notes.html',
+            notes=files,
+        )
+    else:
+        return f.render_template('/login.html', msg='')
+
+
+@app.route('/recado', methods=['GET'])
+def get_recado():
+    cookie_user = f.request.cookies.get('python_ava_user')
+    if cookie_user:
+        file = f.request.args.get('disciplina')
+        url = './notes/' + file
+        doc = os.popen(f'cat {url}').read()
+        return f.render_template(
+            'note.html',
+            note=doc,
+        )
+    else:
+        return f.render_template('/login.html', msg='')
 
 
 @app.route('/login', methods=['GET'])

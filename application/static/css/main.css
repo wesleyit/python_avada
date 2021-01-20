@@ -19,6 +19,15 @@ div.thumbnail {
     height: 400px;
 }
 
+div.recados {
+    width: 800;
+    height: 300;
+    font-variant: small-caps;
+    font-style: italic;
+    font-size: 1.8em;
+    white-space: pre;
+}
+
 h1 small {
     font-size: 0.5em;
 }
