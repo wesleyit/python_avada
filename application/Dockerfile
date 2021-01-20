@@ -33,14 +33,15 @@ ADD . /app
 WORKDIR /app
 
 # We like Virtual Environments :)
-RUN make venv
-ENV VIRTUAL_ENV=/app/env
+RUN rm -rf "/app/env" || true
+RUN /usr/bin/python3 -m venv env
+ENV VIRTUAL_ENV="/app/env"
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-RUN make pip
+RUN pip install -U -r "./requirements.txt"
 
 # Do we need some TCP ports?
 EXPOSE 8080
 
 # Time to run!
 ENV DBSTRING="" 
-CMD make start DBSTRING=${DBSTRING}
+CMD python app.py "${DBSTRING}"
