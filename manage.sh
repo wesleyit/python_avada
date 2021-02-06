@@ -37,7 +37,9 @@ function run_app() {
     [ -z "$DBSTRING" ] && echo "Export the DBSTRING variable." && exit 1
     source "env/bin/activate"
     cd "application/"
-    python app.py "$DBSTRING"
+    while true; do
+        python app.py "$DBSTRING"
+    done
     cd ..
 }
 
