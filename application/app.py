@@ -19,7 +19,7 @@ SQL Structure
 '''
 
 texto_alunos = '''
-<p><a href="/logout">Logout</a></p>
+<p><a href="/logout">Logout</a> | <a href="/recados">Recados</a></p>
 <p>Selecione sua aula abaixo, de forma virtual,
 para iniciar a sua aprendizagem neste ambiente:</p>
 '''
