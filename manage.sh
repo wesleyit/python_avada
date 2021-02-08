@@ -96,9 +96,8 @@ function all() {
     docker rm -f mysql 2>/dev/null || true
     sudo rm -rf "database/db_volume" || true
     run_db_container
-    build
     sleep 10 && load_db_container
-    run_app_container
+    run_app
 }
 
 case $1 in
