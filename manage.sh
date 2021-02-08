@@ -22,7 +22,7 @@ function venv() {
     rm -rf env 2>/dev/null || true
     python3 -m venv env
     source "env/bin/activate"
-    pip install -U -r "./application/requirements.txt"
+    pip3 install -U -r "./application/requirements.txt"
 }
 
 function build() {
@@ -38,7 +38,7 @@ function run_app() {
     source "env/bin/activate"
     cd "application/"
     while true; do
-        python app.py "$DBSTRING"
+        python3 app.py "$DBSTRING"
     done
     cd ..
 }
