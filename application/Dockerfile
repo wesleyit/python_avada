@@ -1,7 +1,8 @@
 # Using a stable Ubuntu LTS
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Ensuring we are using the latest software
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt upgrade -y
 
@@ -11,6 +12,8 @@ RUN apt install -y \
     python3-dev \
     python3-pip \
     python3-venv \
+		python3-pip \
+		python3-wheel \
     make \
     git \
     curl \
@@ -37,11 +40,12 @@ RUN rm -rf "/app/env" || true
 RUN /usr/bin/python3 -m venv env
 ENV VIRTUAL_ENV="/app/env"
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-RUN pip install -U -r "./requirements.txt"
+RUN pip3 install wheel
+RUN pip3 install -U -r "./requirements.txt"
 
 # Do we need some TCP ports?
 EXPOSE 8080
 
 # Time to run!
-ENV DBSTRING="" 
-CMD python app.py "${DBSTRING}"
+ENV DBSTRING=""
+CMD python3 app.py "${DBSTRING}"

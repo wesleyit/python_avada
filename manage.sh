@@ -22,7 +22,7 @@ function venv() {
     rm -rf env 2>/dev/null || true
     python3 -m venv env
     source "env/bin/activate"
-		pip3 install wheel
+	pip3 install wheel
     pip3 install -U -r "./application/requirements.txt"
 }
 
@@ -36,10 +36,12 @@ function build() {
 function run_app() {
     HELP=" run_app: Executes the application using Python"
     [ -z "$DBSTRING" ] && echo "Export the DBSTRING variable." && exit 1
-    source "env/bin/activate"
+    [ -e "./env" ] && source "env/bin/activate" || venv
     cd "application/"
     while true; do
         python3 app.py "$DBSTRING"
+		sleep 2
+        echo "Trying to run the app again..."
     done
     cd ..
 }
@@ -89,7 +91,7 @@ function backup_db() {
         >db_dump_$(date +%d-%m-%Y %H %M %S).sql
 }
 
-function all() {
+function all_container() {
     HELP=" all: Does everithing to run the application with Docker."
     deactivate 2>/dev/null || true
     sudo rm -rf env 2>/dev/null || true
@@ -98,7 +100,20 @@ function all() {
     sudo rm -rf "database/db_volume" || true
     run_db_container
     sleep 10 && load_db_container
-    run_app
+    run_app_container
+}
+
+function all() {
+		HELP=" all: Does everithing to run the application."
+		deactivate 2>/dev/null || true
+		sudo rm -rf env 2>/dev/null || true
+		docker rm -f python_ava 2>/dev/null || true
+		docker rm -f mysql 2>/dev/null || true
+		sudo rm -rf "database/db_volume" || true
+        killall -9 python3 || true
+		run_db_container
+		sleep 10 && load_db_container
+		run_app
 }
 
 case $1 in
@@ -109,6 +124,7 @@ run_app_container) run_app_container ;;
 run_db_container) run_db_container && exec "$SHELL" ;;
 load_db_container) load_db_container ;;
 all) all ;;
+all_container) all_container ;;
 backup_db) backup_db ;;
 *) help ;;
 esac
